@@ -32,7 +32,15 @@ export const registerController = async (req, res) => {
     const newUser = await UserModel.create({
       name,
       email,
-      password: hashedPassword, // Save hashed password
+      password: hashedPassword, 
+    });
+
+    // update last login
+    const date = new Date();
+    const lastLoginDate = date.toLocaleDateString(); 
+
+    await UserModel.findByIdAndUpdate(newUser._id, {
+      $set: { lastLoginDate: lastLoginDate }, 
     });
 
     // Generate JWT Token
@@ -89,6 +97,14 @@ export const loginController = async (req, res) => {
       });
     }
 
+    // update last login
+    const date = new Date();
+    const lastLoginDate = date.toLocaleDateString();
+
+    await UserModel.findByIdAndUpdate(user._id, {
+      $set: { lastLoginDate: lastLoginDate }, 
+    });
+
     // Generate token and set in cookie
     await generateToken(user._id, res);
 
@@ -133,3 +149,14 @@ export const logoutController = async (req, res) => {
     });
   }
 };
+
+
+// --------------------get user information----------------
+
+// export const getUserInfoController=async (req,res)=>{
+//   try{
+
+//   }catch(err){
+
+//   }
+// }

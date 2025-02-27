@@ -8,6 +8,7 @@ import connectDb from "./config/db.js";
 import userRouter from "./routes/user.routes.js";
 import productRouter from "./routes/product.routes.js";
 
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 

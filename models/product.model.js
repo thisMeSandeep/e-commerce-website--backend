@@ -9,8 +9,8 @@ const productSchema = new mongoose.Schema(
     discountPercentage: { type: Number, default: 0 },
     rating: { type: Number, default: 0 },
     stock: { type: Number, required: true },
-    tags: [{ type: String }], 
-    brand: { type: String, required: true },
+    tags: [{ type: String }],
+    brand: { type: String, },
     sku: { type: String, unique: true, required: true },
     weight: { type: Number, default: 0 },
 
@@ -18,18 +18,29 @@ const productSchema = new mongoose.Schema(
     dimensions: {
       width: { type: Number, default: 0 },
       height: { type: Number, default: 0 },
-      depth: { type: Number, default: 0 }
+      depth: { type: Number, default: 0 },
     },
 
     warrantyInformation: { type: String, default: "No warranty available" },
-    shippingInformation: { type: String, default: "Ships in 3-5 business days" },
-    availabilityStatus: { 
-      type: String, 
-      enum: ["In Stock", "Low Stock", "Out of Stock"], 
-      default: "In Stock" 
+    shippingInformation: {
+      type: String,
+      default: "Ships in 3-5 business days",
+    },
+    availabilityStatus: {
+      type: String,
+      enum: ["In Stock", "Low Stock", "Out of Stock"],
+      default: "In Stock",
     },
     // Reference to review model
-    reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
+    reviews: [
+      {
+        rating: Number,
+        comment: String,
+        date: Date,
+        reviewerName: String,
+        reviewerEmail: String,
+      },
+    ],
 
     returnPolicy: { type: String, default: "No return policy available" },
     minimumOrderQuantity: { type: Number, default: 1 },
@@ -39,11 +50,11 @@ const productSchema = new mongoose.Schema(
       createdAt: { type: Date },
       updatedAt: { type: Date },
       barcode: { type: String },
-      qrCode: { type: String }
+      qrCode: { type: String },
     },
 
-    images: [{ type: String }], 
-    thumbnail: { type: String, required: true }
+    images: [{ type: String }],
+    thumbnail: { type: String, required: true },
   },
   { timestamps: true }
 );
@@ -56,5 +67,6 @@ productSchema.pre("save", function (next) {
   next();
 });
 
-const ProductModel = mongoose.models.Product || mongoose.model("Product", productSchema);
+const ProductModel =
+  mongoose.models.Product || mongoose.model("Product", productSchema);
 export default ProductModel;
