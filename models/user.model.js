@@ -9,12 +9,6 @@ const userSchema = new mongoose.Schema(
     // Reference to address model
     address: [{ type: mongoose.Schema.Types.ObjectId, ref: "Address" }],
 
-    // Reference to cart model
-    cart: [{ type: mongoose.Schema.Types.ObjectId, ref: "Cart" }],
-
-    // Reference to wishList model
-    wishList: [{ type: mongoose.Schema.Types.ObjectId, ref: "WishList" }],
-
     // Reference to order model
     orderHistory: [{ type: mongoose.Schema.Types.ObjectId, ref: "Order" }],
 

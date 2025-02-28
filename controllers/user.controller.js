@@ -79,7 +79,7 @@ export const loginController = async (req, res) => {
     }
 
     // Get user
-    const user = await UserModel.findOne({ email }).populate("cart");
+    const user = await UserModel.findOne({ email });
 
     if (!user) {
       return res.status(404).json({
