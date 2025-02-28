@@ -32,15 +32,15 @@ export const registerController = async (req, res) => {
     const newUser = await UserModel.create({
       name,
       email,
-      password: hashedPassword, 
+      password: hashedPassword,
     });
 
     // update last login
     const date = new Date();
-    const lastLoginDate = date.toLocaleDateString(); 
+    const lastLoginDate = date.toLocaleDateString();
 
     await UserModel.findByIdAndUpdate(newUser._id, {
-      $set: { lastLoginDate: lastLoginDate }, 
+      $set: { lastLoginDate: lastLoginDate },
     });
 
     // Generate JWT Token
@@ -79,7 +79,7 @@ export const loginController = async (req, res) => {
     }
 
     // Get user
-    const user = await UserModel.findOne({ email });
+    const user = await UserModel.findOne({ email }).populate("cart");
 
     if (!user) {
       return res.status(404).json({
@@ -102,7 +102,7 @@ export const loginController = async (req, res) => {
     const lastLoginDate = date.toLocaleDateString();
 
     await UserModel.findByIdAndUpdate(user._id, {
-      $set: { lastLoginDate: lastLoginDate }, 
+      $set: { lastLoginDate: lastLoginDate },
     });
 
     // Generate token and set in cookie
@@ -150,13 +150,35 @@ export const logoutController = async (req, res) => {
   }
 };
 
-
 // --------------------get user information----------------
 
-// export const getUserInfoController=async (req,res)=>{
-//   try{
+export const getUserDataController = async (req, res) => {
+  const userId = req.id;
+  try {
+    if (!userId) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized access",
+      });
+    }
 
-//   }catch(err){
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User data not found",
+      });
+    }
 
-//   }
-// }
+    return res.status(200).json({
+      success: true,
+      message: "User data found",
+      user,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};

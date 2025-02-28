@@ -7,6 +7,7 @@ import helmet from "helmet";
 import connectDb from "./config/db.js";
 import userRouter from "./routes/user.routes.js";
 import productRouter from "./routes/product.routes.js";
+import cartRouter from "./routes/cart.routes.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -14,8 +15,8 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(
   cors({
-    origin: "http://localhost:5173", 
-    credentials: true, 
+    origin: "http://localhost:5173",
+    credentials: true,
   })
 );
 app.use(express.json());
@@ -28,6 +29,8 @@ app.get("/", (req, res) => res.send("Hello World!"));
 app.use("/api/user", userRouter);
 // product API
 app.use("/api/products", productRouter);
+// cart api
+app.use("/api/cart", cartRouter);
 
 // Start server
 async function startServer() {
