@@ -6,20 +6,12 @@ const userSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true, minlength: 6 },
     avatar: { type: String, default: "" },
-    // Reference to address model
-    address: [{ type: mongoose.Schema.Types.ObjectId, ref: "Address" }],
-
-    // Reference to order model
-    orderHistory: [{ type: mongoose.Schema.Types.ObjectId, ref: "Order" }],
-
     lastLoginDate: { type: String, default: null },
-
     accountStatus: {
       type: String,
       enum: ["active", "suspended", "deleted"],
       default: "active",
     },
-
     role: {
       type: String,
       enum: ["user", "admin"],

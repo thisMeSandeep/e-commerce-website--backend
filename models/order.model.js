@@ -3,24 +3,18 @@ import mongoose from "mongoose";
 const orderSchema = new mongoose.Schema(
   {
     userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      type: String, 
       required: true,
     },
-    products: [
-      {
-        productId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Product",
-          required: true,
-        },
-        quantity: {
-          type: Number,
-          required: true,
-          min: 1, 
-        },
-      },
-    ],
+    productId: {
+      type: String, 
+      required: true,
+    },
+    quantity: {
+      type: Number,
+      required: true,
+      min: 1,
+    },
     amount: {
       type: Number,
       required: true,
@@ -36,7 +30,7 @@ const orderSchema = new mongoose.Schema(
       default: "pending",
     },
   },
-  { timestamps: true } 
+  { timestamps: true }
 );
 
 const OrderModel = mongoose.models.Order || mongoose.model("Order", orderSchema);

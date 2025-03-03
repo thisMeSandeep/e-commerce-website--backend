@@ -2,14 +2,38 @@ import mongoose from "mongoose";
 
 const addressSchema = new mongoose.Schema(
   {
-    addressLine: { type: String, required: true },
-    city: { type: String, required: true },
-    state: { type: String, required: true },
-    pincode: { type: Number, required: true },
-    country: { type: String, required: true },
-    mobile: { type: Number, required: true },
+    userId: {
+      type: String,
+      required: true,
+    },
+    fullAddress: {
+      type: String,
+      required: true,
+    },
+    city: {
+      type: String,
+      required: true,
+    },
+    state: {
+      type: String,
+      required: true,
+    },
+    country: {
+      type: String,
+      required: true,
+    },
+    mobile: {
+      type: String,
+      required: true,
+    },
+    zipCode: {
+      type: String,
+      required: true,
+    },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
 const AddressModel =

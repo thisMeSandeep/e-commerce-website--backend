@@ -8,10 +8,8 @@ import authMiddleware from "../middlewares/auth.middleware.js";
 
 const wishListRouter = express.Router();
 
-wishListRouter.route("/addItems").post(authMiddleware, addItemsToWishlist); // Add item to wishlist
-wishListRouter.route("/getItems").get(authMiddleware, getWishListItems); // Get all wishlist items
-wishListRouter
-  .route("/removeItems/:id")
-  .delete(authMiddleware, removeItemFromWishlist); // Remove item from wishlist
+wishListRouter.route("/add-Items").post(authMiddleware, addItemsToWishlist); // Add item to wishlist
+wishListRouter.route("/get-Items").get(authMiddleware, getWishListItems); // Get all wishlist items
+wishListRouter.route("/remove-Items/:id").delete(authMiddleware, removeItemFromWishlist); // Remove item from wishlist
 
 export default wishListRouter;
