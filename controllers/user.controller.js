@@ -249,16 +249,6 @@ export const addUserAddressController = async (req, res) => {
       });
     }
 
-    // Check if user already has an address
-    const existingAddress = await AddressModel.findOne({ userId });
-
-    if (existingAddress) {
-      return res.status(400).json({
-        success: false,
-        message: "Address already exists. Please update it instead.",
-      });
-    }
-
     const newAddress = await AddressModel.create({
       userId,
       fullAddress,
@@ -282,50 +272,19 @@ export const addUserAddressController = async (req, res) => {
   }
 };
 
-// update addresss
-
-export const updateUserAddressController = async (req, res) => {
-  const userId = req.id;
-
-  try {
-    const updatedAddress = await AddressModel.findOneAndUpdate(
-      { userId },
-      { $set: req.body },
-      { new: true }
-    );
-
-    if (!updatedAddress) {
-      return res.status(404).json({
-        success: false,
-        message: "Address not found",
-      });
-    }
-
-    return res.status(200).json({
-      success: true,
-      message: "Address updated successfully",
-      updatedAddress,
-    });
-  } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: "Internal server error",
-    });
-  }
-};
 
 //get address
 export const getAddressesController = async (req, res) => {
   try {
-    const userId = req.user.id;
+    const userId = req.id;
     const addresses = await AddressModel.find({ userId });
 
     res.status(200).json({
       success: true,
       addresses,
     });
-  } catch (error) {
-    console.error("Error fetching addresses:", error);
+  } catch (err) {
+    console.error("Error fetching addresses:", err.message);
     res.status(500).json({ message: "Failed to fetch addresses" });
   }
 };
@@ -351,8 +310,8 @@ export const deleteAddressController = async (req, res) => {
       success: true,
       message: "Address deleted successfully",
     });
-  } catch (error) {
-    console.error("Error deleting address:", error);
+  } catch (err) {
+    console.error("Error deleting address:", err.message);
     return res.status(500).json({
       success: false,
       message: "Failed to delete address",

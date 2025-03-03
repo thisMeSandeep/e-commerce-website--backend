@@ -6,7 +6,6 @@ import {
   loginController,
   logoutController,
   addUserAddressController,
-  updateUserAddressController,
   deleteAddressController,
   getAddressesController,
 } from "../controllers/user.controller.js";
@@ -27,10 +26,6 @@ userRouter.patch(
   updateUserInfoController
 ); //update user data
 userRouter.route("/add-address").post(authMiddleware, addUserAddressController); //add address
-userRouter
-  .route("/update-address")
-  .post(authMiddleware, updateUserAddressController); //update user address
-
 userRouter
   .route("/delete-address/:id")
   .delete(authMiddleware, deleteAddressController); // Delete user address
