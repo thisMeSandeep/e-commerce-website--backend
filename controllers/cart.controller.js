@@ -1,43 +1,43 @@
 import CartModel from "../models/cart.model.js";
+import ProductModel from "../models/product.model.js";
 
 // add to cart
 export const addItemToCartController = async (req, res) => {
   try {
-    const userId = req.id; // Get user ID from auth middleware
-    const { quantity, title, price, thumbnail, productId } = req.body;
+    const userId = req.id;
+    const { productId, quantity } = req.body;
 
-    if (
-      !userId ||
-      !productId ||
-      !title ||
-      !price ||
-      !thumbnail ||
-      !quantity ||
-      quantity <= 0
-    ) {
+    if (!userId || !productId || !quantity || quantity <= 0) {
       return res.status(400).json({
         success: false,
         message: "Item cannot be added to cart.",
       });
     }
 
+    //  fetch product details
+    const productDetails = await ProductModel.findById(productId);
+    // check for availabilty
+    if (productDetails.stock === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Item is out of stock",
+      });
+    }
+
     // Check if the product already exists
-    let cartItem = await CartModel.findOne({ userId, title });
+    let cartItem = await CartModel.findOne({ userId, productId });
 
     if (cartItem) {
-      cartItem.quantity += quantity; // Update quantity
+      cartItem.quantity += quantity;
       await cartItem.save();
     } else {
       await CartModel.create({
         userId,
         productId,
+        productDetails,
         quantity,
-        title,
-        price,
-        thumbnail,
       });
     }
-
     return res.status(200).json({
       success: true,
       message: "Item added to cart successfully",
@@ -80,12 +80,11 @@ export const getCartItemsController = async (req, res) => {
   }
 };
 
-
 // Remove item from cart
 export const removeItemFromCartController = async (req, res) => {
   try {
-    const userId = req.id; 
-    const { id } = req.params; 
+    const userId = req.id;
+    const { id } = req.params;
     if (!userId || !id) {
       return res.status(400).json({
         success: false,

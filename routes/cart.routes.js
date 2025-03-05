@@ -9,12 +9,12 @@ import {
 const cartRouter = express.Router();
 
 cartRouter
-  .route("/addItemToCart")
+  .route("/add-Item-ToCart")
   .post(authMiddleware, addItemToCartController); //add item to cart
 
-cartRouter.route("/getCartItems").get(authMiddleware, getCartItemsController); //get cart items
+cartRouter.route("/get-Cart-Items").get(authMiddleware, getCartItemsController); //get cart items
 cartRouter
-  .route("/removeItem/:id")
+  .route("/remove-Item/:id")
   .delete(authMiddleware, removeItemFromCartController); //remove item from cart
 
 export default cartRouter;

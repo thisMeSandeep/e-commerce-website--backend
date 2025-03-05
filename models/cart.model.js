@@ -3,29 +3,21 @@ import mongoose from "mongoose";
 const cartSchema = new mongoose.Schema(
   {
     userId: {
-      type: String, 
+      type: String,
       required: true,
     },
-    productId:{
-      type: String, 
+    productId: {
+      type: String,
+      required: true,
+    },
+    productDetails: {
+      type: Object,
       required: true,
     },
     quantity: {
       type: Number,
       required: true,
       min: 1,
-    },
-    title: {
-      type: String,
-      required: true,
-    },
-    price: {
-      type: Number,
-      required: true,
-    },
-    thumbnail: {
-      type: String,
-      required: true, 
     },
   },
   {
