@@ -9,6 +9,7 @@ import userRouter from "./routes/user.routes.js";
 import productRouter from "./routes/product.routes.js";
 import cartRouter from "./routes/cart.routes.js";
 import wishListRouter from "./routes/wishlist.routes.js";
+import orderRouter from "./routes/order.routes.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -34,6 +35,8 @@ app.use("/api/products", productRouter);
 app.use("/api/cart", cartRouter);
 // wishlist api
 app.use("/api/wishlist", wishListRouter);
+// order api
+app.use("/api/order", orderRouter);
 
 // Start server
 async function startServer() {

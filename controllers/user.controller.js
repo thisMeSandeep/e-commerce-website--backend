@@ -3,6 +3,8 @@ import AddressModel from "../models/address.model.js";
 import generateToken from "../config/generateToken.js";
 import bcrypt from "bcryptjs";
 import uploadImage from "../config/cloudinaryConfig.js";
+// import OrderModel from "../models/order.model.js";
+// import Razorpay from "razorpay";
 
 // ---------------Register Controller--------------
 export const registerController = async (req, res) => {
@@ -272,8 +274,7 @@ export const addUserAddressController = async (req, res) => {
   }
 };
 
-
-//get address
+//------------------get address------------------------------------
 export const getAddressesController = async (req, res) => {
   try {
     const userId = req.id;
@@ -289,7 +290,7 @@ export const getAddressesController = async (req, res) => {
   }
 };
 
-//delete address
+//-----------------delete address---------------------------------
 export const deleteAddressController = async (req, res) => {
   try {
     const { id } = req.params;
@@ -318,3 +319,4 @@ export const deleteAddressController = async (req, res) => {
     });
   }
 };
+

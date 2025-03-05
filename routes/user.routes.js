@@ -32,4 +32,5 @@ userRouter
 
 userRouter.route("/get-address").get(authMiddleware, getAddressesController); // Get user address
 
+
 export default userRouter;

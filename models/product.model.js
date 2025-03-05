@@ -14,7 +14,6 @@ const productSchema = new mongoose.Schema(
     sku: { type: String, unique: true, required: true },
     weight: { type: Number, default: 0 },
 
-    // Dimensions of product
     dimensions: {
       width: { type: Number, default: 0 },
       height: { type: Number, default: 0 },
@@ -31,7 +30,7 @@ const productSchema = new mongoose.Schema(
       enum: ["In Stock", "Low Stock", "Out of Stock"],
       default: "In Stock",
     },
-    // Reference to review model
+    
     reviews: [
       {
         rating: Number,
@@ -59,7 +58,7 @@ const productSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Ensure `meta` is only included for dummy data
+// Ensure meta data is only included for dummy data
 productSchema.pre("save", function (next) {
   if (!this.meta || Object.keys(this.meta).length === 0) {
     this.meta = undefined;
