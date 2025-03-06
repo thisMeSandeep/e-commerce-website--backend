@@ -19,7 +19,7 @@ export const getProductsController = async (req, res) => {
       if (maxPrice && !isNaN(maxPrice)) filter.price.$lte = Number(maxPrice);
     }
 
-    // Search filter (optional, can be removed if not needed)
+    // Search filter 
     if (search) {
       filter.$or = [
         { title: { $regex: search, $options: "i" } },

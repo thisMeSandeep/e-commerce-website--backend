@@ -3,8 +3,7 @@ import AddressModel from "../models/address.model.js";
 import generateToken from "../config/generateToken.js";
 import bcrypt from "bcryptjs";
 import uploadImage from "../config/cloudinaryConfig.js";
-// import OrderModel from "../models/order.model.js";
-// import Razorpay from "razorpay";
+
 
 // ---------------Register Controller--------------
 export const registerController = async (req, res) => {
