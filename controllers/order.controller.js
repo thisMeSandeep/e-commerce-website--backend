@@ -60,7 +60,7 @@ export const codOrderController = async (req, res) => {
 
 //----------------------online payment controller------------------
 
-// flow - create a razorpay  order ->pay amount on frontend->verify payment ->create product order
+// flow - create a razorpay  order -> pay amount on frontend-> verify payment -> create product order
 
 // razorpay instance
 const razorpayInstance = new Razorpay({
@@ -81,7 +81,7 @@ export const createRazorpayOrder = async (req, res) => {
 
     // razorpay options
     const options = {
-      amount:Math.floor(amount)*100,
+      amount: Math.floor(amount) * 100,
       currency: process.env.currency,
       receipt: `receipt_${Date.now()}`,
     };
@@ -168,5 +168,67 @@ export const verifyRazorpayPayment = async (req, res) => {
   }
 };
 
-
 // ----------------------get all orders---------------------------
+export const getAllOrdersController = async (req, res) => {
+  try {
+    const userId = req.id;
+
+    // Fetch all orders
+    const orders = await OrderModel.find({ userId }).sort({orderDate:-1});
+
+    if (!orders || orders.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No orders found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Orders retrieved successfully",
+      orders,
+    });
+  } catch (err) {
+    console.error("Error fetching orders:", err);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+
+// cancel order
+
+export const cancelOrderController = async (req, res) => {
+  const userId = req.id;
+  const { id } = req.params;
+  
+  console.log("id:",id)
+
+  try {
+    const order = await OrderModel.findOneAndUpdate(
+      { userId, _id: id },
+      { $set: { orderStatus: "cancelled" } },
+      { new: true } 
+    );
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Order Cancelled",
+      order, 
+    });
+  } catch (err) {
+    console.error("Order Cancellation Error:", err);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
