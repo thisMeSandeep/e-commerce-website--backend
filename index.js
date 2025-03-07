@@ -25,8 +25,6 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(helmet());
 
-app.get("/", (req, res) => res.send("Hello World!"));
-
 //user API
 app.use("/api/user", userRouter);
 // product API
