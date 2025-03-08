@@ -10,15 +10,14 @@ const generateToken = async (id, res) => {
 
     // Cookie options
     const options = {
-      httpOnly: true,
-      sameSite: "strict",  
-      secure: process.env.NODE_ENV === "production", 
-      maxAge: 7 * 24 * 60 * 60 * 1000,  
+      httpOnly: true, 
+      sameSite: "none", 
+      secure: true, 
+      maxAge: 7 * 24 * 60 * 60 * 1000, 
     };
 
     // Set cookie
     res.cookie("token", token, options);
-
   } catch (err) {
     console.log("Error generating token:", err.message);
   }
