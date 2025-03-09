@@ -20,7 +20,7 @@ export const addItemToCartController = async (req, res) => {
     if (productDetails.stock === 0) {
       return res.status(400).json({
         success: false,
-        message: "Item is out of stock",
+        message: "Item  out of stock",
       });
     }
 
@@ -40,7 +40,7 @@ export const addItemToCartController = async (req, res) => {
     }
     return res.status(200).json({
       success: true,
-      message: "Item added to cart successfully",
+      message: "Item added to cart",
     });
   } catch (err) {
     console.error("Cart Error:", err.message);
