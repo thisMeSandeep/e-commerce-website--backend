@@ -4,7 +4,6 @@ import generateToken from "../config/generateToken.js";
 import bcrypt from "bcryptjs";
 import uploadImage from "../config/cloudinaryConfig.js";
 
-
 // ---------------Register Controller--------------
 export const registerController = async (req, res) => {
   const { name, email, password } = req.body;
@@ -137,8 +136,8 @@ export const logoutController = async (req, res) => {
     // Clear the token cookie
     res.clearCookie("token", {
       httpOnly: true,
-      sameSite: "strict",
-      secure: process.env.NODE_ENV === "production",
+      sameSite: "none",
+      secure: true,
     });
 
     return res.status(200).json({
@@ -318,4 +317,3 @@ export const deleteAddressController = async (req, res) => {
     });
   }
 };
-
